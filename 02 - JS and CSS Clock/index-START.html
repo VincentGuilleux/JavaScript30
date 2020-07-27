@@ -49,11 +49,12 @@
         0 0 10px rgba(0,0,0,0.2);
     }
 
+    /*White circle*/
     .clock-face {
       position: relative;
       width: 100%;
       height: 100%;
-      transform: translateY(-3px); /* account for the height of the clock hands */
+      /*transform: translateY(-3px);  account for the height of the clock hands */
     }
 
     .hand {
@@ -62,6 +63,12 @@
       background: black;
       position: absolute;
       top: 50%;
+      /*this is not the default which is 50% */
+      transform-origin: 100%;
+      /*To make the lines start vertically and not horizontally as by default*/
+      transform: rotate(90deg);
+      transition: all 0.5s;
+
     }
 
   </style>
