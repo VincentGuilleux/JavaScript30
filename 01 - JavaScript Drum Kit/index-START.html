@@ -59,6 +59,30 @@
 
 <script>
 
+  function playSound(e) {
+
+    const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+    const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+    console.log(audio);
+    console.log(key);
+    audio.currentTime = 0; // resets even if it is playing already so that if you press multiple times quickly keys, it restarts the sound
+    audio.play();
+    key.classList.add("playing");
+  };
+
+  function removeTransition(e) {
+    if (e.propertyName !== 'transform') return; // skip if it is not a transform, it works as well if line is not present but avoids to generate all TransitionEvents because we are only interested by the transform one
+    console.log(e);
+    this.classList.remove("playing");
+  };
+
+  // Event listener for when a key class ends its transition (in order to remove the playing class)
+  const keys = document.querySelectorAll('.key')
+  keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+
+  // Generic Event listener used to call playSound function
+  window.addEventListener("keydown", playSound);
+
 </script>
 
 
