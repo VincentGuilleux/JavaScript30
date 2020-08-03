@@ -49,6 +49,7 @@
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
     const result3 = inventors.sort(function (x,y) {return x.year - y.year});
+    // no need of curly braces below because function body is a single line block
     const result3b = inventors.sort((x,y) => x.year - y.year);
 
     // Array.prototype.reduce()
@@ -58,12 +59,14 @@
     },0); // initialValue for total must be set to 0 otherwise initial value is undefined thus reduce calculation cannot work
 
     // 5. Sort the inventors by years lived
-    const result5 = inventors.sort((x,y) => - (x.passed - x.year) + (y.passed - y.year));
+    const result5 = inventors.sort(function(x,y) { return (x.passed - x.year) - (y.passed - y.year) })
+    // no need of curly braces below because function body is a single line block
+    const result5b = inventors.sort((x,y) => - (x.passed - x.year) + (y.passed - y.year));
 
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
     const linksNodeList = document.querySelectorAll('.mw-category a');
-    const links = Array.from(linksNodeList); // necessary to convert to an array so as to use map. We could have used instead: links = [...linksNodeList]
+    const links = Array.from(linksNodeList); // necessary to convert to an array so as to use map. We could have used instead: links = [...linksNodeList] to convert to an array as well
     const boulevards = links.map(link => link.textContent);
     result6 = boulevards.filter(boulevard => boulevard.includes('de'));
 
@@ -73,13 +76,12 @@
                       .filter(streetName => streetName.includes('de'));
 
     // 7. sort Exercise
-    // Sort the people alphabetically by last name
+    // Sort the people alphabetically by FIRST name (exercice changed because original people array is already sorted by last name)
     const result7 = people.sort(function (x,y) {
       const [xLast, xFirst] = x.split(', ')
       const [yLast, yFirst] = y.split(', ')
-      return xLast > yLast ? 1 : -1;
+      return xFirst > yFirst ? 1 : -1;
     })
-      // return x.split(',')[0] - y.split(',')[0]})
 
     // 8. Reduce Exercise
     // Sum up the instances of each of these
