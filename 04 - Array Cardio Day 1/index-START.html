@@ -52,6 +52,17 @@
     // no need of curly braces below because function body is a single line block
     const result3b = inventors.sort((x,y) => x.year - y.year);
 
+    // Additional Exercice
+    // 3x. Sort the inventors by last name alphabetically
+    inventors.sort((a, b) => (a.last > b.last) ? 1 : -1)
+    // which is the condensed syntax of
+    inventors.sort((a, b) => {
+      if (a.last > b.last) {
+        return 1
+      } else {
+        return -1 }
+      }
+
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live all together?
     const result4 = inventors.reduce((total, inventor) => {
