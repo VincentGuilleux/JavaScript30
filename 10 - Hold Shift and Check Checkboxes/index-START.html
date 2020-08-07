@@ -102,17 +102,26 @@
   let lastChecked;
 
   function handleCheck(e) {
+    if (lastChecked == null) {
+      console.log("lastChecked value: undefined")
+      } else {
+      console.log("lastChecked value: " + lastChecked.nextElementSibling.innerText);
+      }
+
     let inBetween = false;
-    // Check if shift key is down
-    // AND box is checked
+    // Check if shift key is down AND box is checked
     if (e.shiftKey && this.checked) {
 
-
+      // iteration sur chaque checkbox en vérifiant pour chacune s'il s'agit de la checkox this (donc de la dernière cliquée) ou de la lastChecked(la précédente a avoir été sélectionnée). La 1ère fois, inBetween setté sur true / La 2ème, inBetween setté sur false.
+      // Du fait de la 2e condition, toutes les checkbox entre les 2 sont settées sur true (pas besoin pour this & lastChecked qui sont déjà checked du fait du click de l'utilisateur).
       checkboxes.forEach(checkbox => {
+        // Affiche le texte de la checkbox sur laquelle on itère
         let checkboxText = checkbox.nextElementSibling.innerText;
-        console.log(checkboxText);
+        console.log("checkbox iterated: " + checkboxText);
+
         if (checkbox === this || checkbox === lastChecked) {
           inBetween = !inBetween;
+          console.log("inBetween value: " + inBetween);
           console.log(`${checkboxText} - first or last`);
         }
 
@@ -123,6 +132,7 @@
     }
 
     lastChecked = this;
+    console.log("lastChecked value: " + lastChecked.nextElementSibling.innerText);
   }
 
   // when checkbox updated call function updatecheckbox
