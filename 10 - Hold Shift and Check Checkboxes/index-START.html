@@ -102,11 +102,7 @@
   let lastChecked;
 
   function handleCheck(e) {
-    if (lastChecked == null) {
-      console.log("lastChecked value: undefined")
-      } else {
-      console.log("lastChecked value: " + lastChecked.nextElementSibling.innerText);
-      }
+    lastChecked == null? console.log("lastChecked value: undefined") : console.log("lastChecked value: " + lastChecked.nextElementSibling.innerText);
 
     let inBetween = false;
     // Check if shift key is down AND box is checked
@@ -122,7 +118,7 @@
         if (checkbox === this || checkbox === lastChecked) {
           inBetween = !inBetween;
           console.log("inBetween value: " + inBetween);
-          console.log(`${checkboxText} - first or last`);
+          console.log(`${checkboxText} - first or last element of the iteration`);
         }
 
         if (inBetween) {
@@ -132,7 +128,7 @@
     }
 
     lastChecked = this;
-    console.log("lastChecked value: " + lastChecked.nextElementSibling.innerText);
+    // console.log("lastChecked value: " + lastChecked.nextElementSibling.innerText);
   }
 
   // when checkbox updated call function updatecheckbox
