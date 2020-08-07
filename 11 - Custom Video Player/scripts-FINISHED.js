@@ -39,8 +39,8 @@ function scrub(e) {
 
 /* Hook up the event listeners */
 video.addEventListener('click', togglePlay);
-video.addEventListener('play', updateButton);
-video.addEventListener('pause', updateButton);
+video.addEventListener('play', updateButton); // better solution because people can have plug-ins or ways to play/pause the vid other than clicking on it or the play button
+video.addEventListener('pause', updateButton); // better solution because people can have plug-ins or ways to play/pause the vid other than clicking on it or the play button
 video.addEventListener('timeupdate', handleProgress);
 
 toggle.addEventListener('click', togglePlay);
