@@ -28,19 +28,50 @@
 <script>
   const addItems = document.querySelector('.add-items');
   const itemsList = document.querySelector('.plates');
-  const items = [];
+  const items = JSON.parse(localStorage.getItem('items')) || []; // items array is blank unless some items were previously sumbitted and saved to localStorage (cf. function addItem)
 
   function addItem(e) {
-    e.preventDefault();
+    e.preventDefault(); // prevents the form from being submitted
+    // this correponds here to the form tag in which we search for name item value
     const text = (this.querySelector('[name=item]')).value;
     const item = {
-      text: text,
+      text, // shorthand in JS for text: text,
       done: false
-    }
-    console.log(item);
+    };
+    items.push(item);
+    populateList(items, itemsList);
+    localStorage.setItem('items', JSON.stringify(items)); // localStorage only accepts strings hence the stringify method - will save to localStorage the items array (stringified)
+    this.reset(); // this is here the form element which has a reset method which allows to reset the form
+  };
+
+  // first parameter plates is the items list, 2nd parameter platesList is the HTML class 'plates' where will be listed the different submitted items
+  function populateList(plates = [], platesList) {
+    platesList.innerHTML = plates.map((plate, i) => {
+      return `
+        <li>
+          <input type="checkbox" data-index=${i} id="plate${i}" ${plate.done ? 'checked' : ''} />
+          <label for="plate${i}">${plate.text}</label>
+        </li>
+      `
+    }).join('');
+  };
+
+  function toggleDone(e) {
+    if (!e.target.matches('input')) return; // skip this unless it's an input
+    target = e.target;
+    console.log(target);
+    items[target.dataset.index].done = !items[target.dataset.index].done;
+    console.log(items[target.dataset.index].done);
+    localStorage.setItem('items', JSON.stringify(items));
+    populateList(items, itemsList); // don't understand why it is necessary
   };
 
   addItems.addEventListener('submit', addItem);
+  itemsList.addEventListener('click', toggleDone);
+
+  // on page load the list is populated based on localStorage savings
+  populateList(items, itemsList);
+
 
 </script>
 
