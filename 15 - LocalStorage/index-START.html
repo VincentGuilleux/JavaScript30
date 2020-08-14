@@ -22,11 +22,14 @@
     <form class="add-items">
       <input type="text" name="item" placeholder="Item Name" required>
       <input type="submit" value="+ Add Item">
+      <button type="button">Check all</button>
+      <button type="button">Uncheck all</button>
     </form>
   </div>
 
 <script>
   const addItems = document.querySelector('.add-items');
+  const buttons = document.querySelectorAll('button');
   const itemsList = document.querySelector('.plates');
   const items = JSON.parse(localStorage.getItem('items')) || []; // items array is blank unless some items were previously sumbitted and saved to localStorage (cf. function addItem)
 
@@ -66,9 +69,23 @@
     populateList(items, itemsList); // don't understand why it is necessary
   };
 
+  function checkList(e) {
+    console.log(e.target.innerText);
+    items.forEach(item => {
+    if (e.target.innerText === 'Check all') {
+      item.done = true
+      console.log(item.done);
+      } else {
+      item.done = false
+      }
+    });
+    populateList(items, itemsList);
+    localStorage.setItem('items', JSON.stringify(items));
+  }
+
   addItems.addEventListener('submit', addItem);
   itemsList.addEventListener('click', toggleDone);
-
+  buttons.forEach(button => button.addEventListener('click', checkList));
   // on page load the list is populated based on localStorage savings
   populateList(items, itemsList);
 
