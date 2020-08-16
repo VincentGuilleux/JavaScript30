@@ -35,6 +35,39 @@
   </style>
 
 <script>
+
+  const hero = document.querySelector('.hero');
+  const text = hero.querySelector('h1');
+  const walk = 500; // 100px
+
+  function shadow(e) {
+    const { offsetWidth: width, offsetHeight: height } = hero;
+    // destructuring ES6 syntax above equal to the 2 lines below
+    // const width = hero.offsetWidth;
+    // const height = hero.offsetHeight;
+    let { offsetX: x, offsetY: y } = e;
+    // console.log(x, y); // before correction with the if below
+    console.log(this, e.target); // this will always be the div class hero whereas e.target is the reference to the object onto which the event was dispatched i.e. either hero or h1. Thus below if e.target is h1 (so not equal to this) x and y must be equal respectively to offsetLeft/Top + offsetX/Y. This is necessary because offsetX/Y provide the offset in the X/Y coordinate of the mouse pointer between the event and the padding edge of the target node. if h1 is the event, the offset will be calculated compared the h1 padding whereas we want it to be always calculated compared to class hero padding hence the correction below.
+    if (this !== e.target) {
+      x = x + e.target.offsetLeft;
+      y = y + e.target.offsetTop;
+    }
+    console.log(x, y);
+
+    const xWalk = Math.round((x / width * walk) - (walk / 2)); // will score from -50 to 50
+    const yWalk = Math.round((y / height * walk) - (walk / 2));
+    console.log(xWalk, yWalk);
+
+    text.style.textShadow = `
+      ${xWalk}px ${yWalk}px 0 rgba(255,0,255,0.7),
+      ${xWalk * -1}px ${yWalk}px 0 rgba(0,255,255,0.7),
+      ${yWalk}px ${xWalk * -1}px 0 rgba(0,255,0,0.7),
+      ${yWalk * -1}px ${xWalk}px 0 rgba(0,0,255,0.7)
+    `;
+  }
+
+
+  hero.addEventListener('mousemove', shadow)
 </script>
 </body>
 </html>
