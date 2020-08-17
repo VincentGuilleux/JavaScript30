@@ -81,9 +81,9 @@
     // 7. sort Exercise
     // Sort the people alphabetically by last name
     const alpha = people.sort((lastOne, nextOne) => {
-      const [aLast, aFirst] = lastOne.split(', ');
+      const [aLast, aFirst] = lastOne.split(', '); // creates an array with LastName then FirstName (comma is the separator)
       const [bLast, bFirst] = nextOne.split(', ');
-      return aLast > bLast ? 1 : -1;
+      return aLast > bLast ? 1 : -1; // sorting according to lastName then return lastOne / NextOne ordered according to this criterion
     });
     console.log(alpha);
 

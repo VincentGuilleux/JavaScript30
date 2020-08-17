@@ -26,12 +26,12 @@
       padding: 0;
       box-shadow: 0 0 0 20px rgba(0, 0, 0, 0.05);
     }
-    
+
     #bands li {
       border-bottom: 1px solid #efefef;
       padding: 20px;
     }
-    
+
     #bands li:last-child {
       border-bottom: 0;
     }
@@ -46,8 +46,56 @@
   <ul id="bands"></ul>
 
 <script>
+
 const bands = ['The Plot in You', 'The Devil Wears Prada', 'Pierce the Veil', 'Norma Jean', 'The Bled', 'Say Anything', 'The Midway State', 'We Came as Romans', 'Counterparts', 'Oh, Sleeper', 'A Skylit Drive', 'Anywhere But Here', 'An Old Dog'];
 
+const sortedBands = bands.sort((a,b) => updateBandName(a) > updateBandName(b) ? 1 : -1)
+// sorting according to updateBandNames(a) vs updateBandNames(a) then return the band array sorted accordingly
+
+function updateBandName(bandName) {
+  bandNameUpdated = bandName.toLowerCase();
+  bandNameUpdated = removeArticles(bandNameUpdated);
+  return bandNameUpdated;
+};
+
+console.log(sortedBands);
+
+// First try that is working with no dissociated updateBandName function
+const sortedBands = bands.sort((a,b) => {
+  aUpdatedForOrdering = a.toLowerCase();
+  bUpdatedForOrdering = b.toLowerCase();
+  aUpdatedForOrdering = removeArticles(aUpdatedForOrdering);
+  bUpdatedForOrdering = removeArticles(bUpdatedForOrdering);
+  return (aUpdatedForOrdering > bUpdatedForOrdering) ? 1 : -1; // sorting according to aUpdated vs bUpdated then return the band array sorted accordingly
+});
+
+function removeArticles(str) {
+  words = str.split(" "); // the string is splitted into an array with x words (space delimitator)
+  if ( words[0] == "the" || words[0] == "an" || words[0] == "a" ) {
+    return words.splice(1).join(" ") // return a string concatenating each word except the first if it is 'the', 'an' or 'a'. Each word s separated from the other with a space delimitator.
+  } else {
+  return str };
+};
+
+// best solution from correction
+// function strip(bandName) {
+//   return bandName.replace(/^(a |the |an )/i, '').trim();
+// }
+
+bandsEl = document.getElementById('bands')
+
+bandsEl.innerHTML = sortedBands.map((band) => {
+  return `<li>${band}</li>`}).join('');
+  // map returns a new array thus the different items are separated by a comma: "<li>Anywhere But Here</li>", "<li>The Bled</li>",...
+  // That's why join('') is used at the end to return one string with no comma so that it is correctly interpreted by HTML: "<li>Anywhere But Here</li><li>The Bled</li>...
+
+
+// other way to generate the HTML but ugly and long
+// bands.forEach(function(band) {
+//   const li = document.createElement("li");
+//   li.appendChild(document.createTextNode(`${band}`));
+//   bandsEl.appendChild(li);
+// });
 
 </script>
 
